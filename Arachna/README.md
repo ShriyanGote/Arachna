@@ -1,2 +1,0 @@
-# Arachna
-#ngspice flipflop simulator
