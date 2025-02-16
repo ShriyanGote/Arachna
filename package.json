@@ -1,0 +1,38 @@
+{
+  "name": "arachna",
+  "version": "1.0.0",
+  "description": "## 🕸️ Overview Arachna is an AI-powered desktop application designed to visually organize responsibilities across different areas of life. It dynamically structures tasks using an interactive graph, helping users prioritize and optimize their schedules. Think of it as a **smart, adaptive productivity tool** that blends a personalized calendar, task manager, and AI-driven assistant.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShriyanGote/Arachna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShriyanGote/Arachna/issues"
+  },
+  "homepage": "https://github.com/ShriyanGote/Arachna#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^9.2.1",
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-packager": "^17.1.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
