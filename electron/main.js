@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -9,10 +10,11 @@ function createWindow() {
         }
     });
 
-    win.loadURL('file://' + __dirname + '/index.html');
+    win.loadURL(`file://${path.join(__dirname, '../frontend/public/index.html')}`);
 }
 
 app.whenReady().then(createWindow);
+
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
