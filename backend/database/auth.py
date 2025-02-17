@@ -8,6 +8,9 @@ from .database import get_db
 from .models import User
 from pydantic import BaseModel
 
+SECRET_KEY = "8b2d20ebf67710bc1c83a8376bce01f487399b943ebfe0b239c9e203524d5f94"  # Use your generated key
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 # OAuth2 Scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
