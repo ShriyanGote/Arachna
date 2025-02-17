@@ -1,31 +1,31 @@
-from fastapi import FastAPI, Depends
-from backend.database.auth import router as auth_router, get_current_user  # ✅ Import get_current_user
-from backend.database.database import engine, Base
-
-
-# Initialize DB
-Base.metadata.create_all(bind=engine)
-
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.routes.tasks import router as task_router
+from backend.database.auth import get_current_user
 
 app = FastAPI()
 
-# Allow frontend requests from localhost
+# ✅ CORS Middleware (Fixes 405 OPTIONS issue)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Change this if frontend runs elsewhere
+    allow_origins=["*"],  # Adjust this to restrict domains (e.g., ["http://localhost:3000"])
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],  # ✅ Ensure all methods are allowed (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # ✅ Allow frontend headers
 )
 
-# Include the auth router
-app.include_router(auth_router)
+@app.get("/")
+def read_root():
+    return {"message": "Arachna AI Engine is running!"}
 
 @app.get("/protected")
-def protected_route(user: dict = Depends(get_current_user)):
+def protected_route(user=Depends(get_current_user)):
     return {"message": f"Hello, {user.name}. This is a protected route!"}
 
-@app.get("/")
-def home():
-    return {"message": "Arachna API is running"}
+# ✅ Include API Routes (AFTER adding CORS)
+app.include_router(task_router)
+
+# Run FastAPI with Uvicorn
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
