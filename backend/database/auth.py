@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from .database import get_db
-from .models import User
+from ..schemas.object import User
 from pydantic import BaseModel
 
 SECRET_KEY = "8b2d20ebf67710bc1c83a8376bce01f487399b943ebfe0b239c9e203524d5f94"  # Use your generated key

@@ -1,20 +1,23 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from backend.database.auth import get_current_user
 from backend.database.database import get_db
-from backend.database.models import Task
-from pydantic import BaseModel
+from backend.schemas.object import Task
+from backend.schemas.object import TaskResponse, TaskCreate
+from backend.database.auth import get_current_user
 
 router = APIRouter()
 
-# Task Schema
-class TaskCreate(BaseModel):
-    title: str
+@router.delete("/tasks/{task_id}")
+def delete_task(task_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):
+    task = db.query(Task).filter(Task.id == task_id, Task.user_id == user.id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    db.delete(task)
+    db.commit()  # ✅ Ensure database commit
+    return {"message": "Task deleted successfully"}
 
-class TaskResponse(BaseModel):
-    id: int
-    title: str
-    completed: bool
+
 
 # ✅ Get all tasks for the logged-in user
 @router.get("/tasks", response_model=list[TaskResponse])
@@ -31,13 +34,4 @@ def create_task(task: TaskCreate, user=Depends(get_current_user), db: Session = 
     db.refresh(new_task)
     return new_task
 
-# ✅ Delete a task
-@router.delete("/tasks/{task_id}")
-def delete_task(task_id: int, user=Depends(get_current_user), db: Session = Depends(get_db)):
-    task = db.query(Task).filter(Task.id == task_id, Task.user_id == user.id).first()
-    if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
-    
-    db.delete(task)
-    db.commit()
-    return {"message": "Task deleted successfully"}
+

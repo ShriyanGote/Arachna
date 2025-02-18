@@ -10,7 +10,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")))
 
 # Now, you can import models correctly
-from backend.database.models import Base  # ✅ Ensure this path is correct
+from backend.schemas.object import Base  # ✅ Ensure this path is correct
 from backend.database.database import SQLALCHEMY_DATABASE_URL  # ✅ Ensure DB URL is correct
 
 

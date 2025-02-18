@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from .database import Base
+from ..database.database import Base
 from sqlalchemy import Boolean
+from pydantic import BaseModel
 
 class User(Base):
     __tablename__ = "users"
@@ -14,11 +15,18 @@ class User(Base):
     tasks = relationship("Task", back_populates="user")  # ✅ Ensure this exists
 
 
+# Task Schema
+class TaskCreate(BaseModel):
+    title: str
 
+class TaskResponse(BaseModel):
+    id: int
+    title: str
+    completed: bool
 
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from .database import Base
+from ..database.database import Base
 
 class Task(Base):
     __tablename__ = "tasks"
