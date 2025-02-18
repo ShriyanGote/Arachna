@@ -13,3 +13,4 @@ typing_extensions==4.12.2
 uvicorn==0.34.0
 fastapi==0.115.8
 alembic==1.7.1
+react-scripts==5.0.0
